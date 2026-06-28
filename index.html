@@ -1,10 +1,30 @@
 <!-- ═══════════════════════════════════════════════════════════════════
-  CHANGES FROM ORIGINAL (Mailchimp wiring + form improvements):
-  • Lines ~710–724  : Email signup form — action URL, method, iframe target,
-                      hidden anti-bot field, name="EMAIL", error message <p>
-  • Lines ~803–840  : JS signup block — validation, button disable, iframe
-                      submit, 1.5 s success delay, error re-enable after 3 s
-  • Line  ~746      : Hidden <iframe> added just before </body>
+  CHANGES — IMAGE FIXES PASS:
+  • .img-placeholder-tall::after  : content set to none (hides PHOTO label)
+  • .product-img::after           : content set to none (hides PHOTO label)
+  • .product-grid                 : added max-width 84% + margin auto (~16% smaller)
+  • .photo-box                    : replaced display:flex with overflow:hidden,
+                                    unified all aspect-ratios to 1/1 (square),
+                                    removed 6 nth-child aspect-ratio overrides
+  • .photo-box::after             : content set to none (hides PHOTO label)
+  • .photo-box img (new rule)     : enforces object-fit:cover, object-position:center,
+                                    width/height 100%, display block
+  • .photo-grid                   : added max-width 84% + margin auto, gap 10px
+  • Gallery HTML photo-box divs   : removed inline style="background:none;"
+  • Gallery HTML img tags         : removed redundant inline styles (now handled by CSS)
+═══════════════════════════════════════════════════════════════════ -->
+<!-- ═══════════════════════════════════════════════════════════════════
+  PHOTO ASSIGNMENTS (added in this pass — swap any file name to update):
+  ─ HERO             : (no hero/banner photo found — stays black)
+  ─ ABOUT            : Picture next to BMW.jpg
+  ─ PRODUCT TEE 001  : Pose 1 Tshirt.jpg
+  ─ PRODUCT HOODIE   : (no hoodie photo found — stays as placeholder)
+  ─ PRODUCT CAP 001  : Pose 2 Hat.jpg
+  ─ GALLERY slot 1   : Pose 3 hat and shirt.jpg
+  ─ GALLERY slot 2   : Pose 4 twins.jpg
+  ─ GALLERY slot 3   : Pose 5 Tshirt.jpg
+  ─ GALLERY slot 4   : Pose 6 Tshirt.jpg
+  ─ GALLERY slots 5–6: (no remaining photos — stay as placeholders)
 ═══════════════════════════════════════════════════════════════════ -->
 <!DOCTYPE html>
 <html lang="en">
@@ -274,11 +294,7 @@
       justify-content: center;
     }
     .img-placeholder-tall::after {
-      content: 'PHOTO';
-      font-size: 0.65rem;
-      letter-spacing: 0.2em;
-      color: #999;
-      font-weight: 500;
+      content: none;
     }
 
     /* ─── PRODUCT SHOWCASE ──────────────────────────────────────── */
@@ -302,6 +318,8 @@
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 24px;
+      max-width: 84%;
+      margin: 0 auto;
     }
     .product-card {
       cursor: default;
@@ -322,11 +340,7 @@
       overflow: hidden;
     }
     .product-img::after {
-      content: 'PHOTO';
-      font-size: 0.6rem;
-      letter-spacing: 0.2em;
-      color: #444;
-      font-weight: 500;
+      content: none;
     }
     .product-name {
       font-family: var(--font-heading);
@@ -360,29 +374,24 @@
     .photo-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 12px;
+      gap: 10px;
+      max-width: 84%;
+      margin: 0 auto;
     }
 
-    /* REPLACE WITH REAL IMAGE */
     .photo-box {
       background: #d8d8d8;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      overflow: hidden;
+      aspect-ratio: 1 / 1;
     }
-    .photo-box::after {
-      content: 'PHOTO';
-      font-size: 0.6rem;
-      letter-spacing: 0.2em;
-      color: #aaa;
-      font-weight: 500;
+    .photo-box::after { content: none; }
+    .photo-box img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      display: block;
     }
-    .photo-box:nth-child(1) { aspect-ratio: 1 / 1; }
-    .photo-box:nth-child(2) { aspect-ratio: 1 / 1.3; }
-    .photo-box:nth-child(3) { aspect-ratio: 1 / 1; }
-    .photo-box:nth-child(4) { aspect-ratio: 1 / 0.75; }
-    .photo-box:nth-child(5) { aspect-ratio: 1 / 1; }
-    .photo-box:nth-child(6) { aspect-ratio: 1 / 1.3; }
 
     .gallery-footer {
       margin-top: 48px;
@@ -578,7 +587,7 @@
     @media (max-width: 540px) {
       .product-grid { max-width: 100%; }
       .photo-grid { grid-template-columns: 1fr; }
-      .photo-box:nth-child(n) { aspect-ratio: 1 / 1; }
+      /* photo-box aspect-ratio already 1/1 globally — no override needed */
     }
   </style>
 </head>
@@ -637,8 +646,8 @@
         </div>
       </div>
       <div class="about-right reveal reveal-delay-3">
-        <!-- REPLACE WITH REAL IMAGE -->
-        <div class="img-placeholder-tall"></div>
+        <!-- ISYA PHOTO: Picture next to BMW.jpg -->
+        <img src="Picture next to BMW.jpg" alt="ISYA — lifestyle shot next to BMW" style="width:100%; aspect-ratio:3/4; object-fit:cover; display:block;" />
       </div>
     </div>
   </section>
@@ -655,24 +664,18 @@
       <div class="product-grid">
 
         <div class="product-card reveal reveal-delay-1">
-          <!-- REPLACE WITH REAL IMAGE -->
-          <div class="product-img"></div>
-          <p class="product-name">ISYA TEE 001</p>
-          <p class="product-status">Dropping Soon</p>
+          <!-- ISYA PHOTO: Pose 1 Tshirt.jpg -->
+          <img src="Pose 1 Tshirt.jpg" alt="ISYA Tee 001 — front pose" style="width:100%; aspect-ratio:3/4; object-fit:cover; display:block;" />
         </div>
 
         <div class="product-card reveal reveal-delay-2">
-          <!-- REPLACE WITH REAL IMAGE -->
-          <div class="product-img"></div>
-          <p class="product-name">ISYA HOODIE 001</p>
-          <p class="product-status">Dropping Soon</p>
+          <!-- ISYA PHOTO: Pose 6 Tshirt.jpg -->
+          <img src="Pose 6 Tshirt.jpg" alt="ISYA — tshirt pose 6" style="width:100%; aspect-ratio:3/4; object-fit:cover; display:block;" />
         </div>
 
         <div class="product-card reveal reveal-delay-3">
-          <!-- REPLACE WITH REAL IMAGE -->
-          <div class="product-img"></div>
-          <p class="product-name">ISYA CAP 001</p>
-          <p class="product-status">Dropping Soon</p>
+          <!-- ISYA PHOTO: Pose 2 Hat.jpg -->
+          <img src="Pose 2 Hat.jpg" alt="ISYA Cap 001 — side pose" style="width:100%; aspect-ratio:3/4; object-fit:cover; display:block;" />
         </div>
 
       </div>
@@ -687,18 +690,12 @@
         <h2 class="section-heading reveal">THE<br>CULTURE</h2>
       </div>
       <div class="photo-grid">
-        <!-- REPLACE WITH REAL IMAGE -->
-        <div class="photo-box reveal"></div>
-        <!-- REPLACE WITH REAL IMAGE -->
-        <div class="photo-box reveal reveal-delay-1"></div>
-        <!-- REPLACE WITH REAL IMAGE -->
-        <div class="photo-box reveal reveal-delay-2"></div>
-        <!-- REPLACE WITH REAL IMAGE -->
-        <div class="photo-box reveal reveal-delay-1"></div>
-        <!-- REPLACE WITH REAL IMAGE -->
-        <div class="photo-box reveal reveal-delay-2"></div>
-        <!-- REPLACE WITH REAL IMAGE -->
-        <div class="photo-box reveal reveal-delay-3"></div>
+        <!-- ISYA PHOTO: Pose 3 hat and shirt.jpg -->
+        <div class="photo-box reveal"><img src="Pose 3 hat and shirt.jpg" alt="ISYA — hat and shirt pose" /></div>
+        <!-- ISYA PHOTO: Pose 4 twins.jpg -->
+        <div class="photo-box reveal reveal-delay-1"><img src="Pose 4 twins.jpg" alt="ISYA — twins pose" /></div>
+        <!-- ISYA PHOTO: Pose 5 Tshirt.jpg -->
+        <div class="photo-box reveal reveal-delay-2"><img src="Pose 5 Tshirt.jpg" alt="ISYA — tshirt pose 5" /></div>
       </div>
       <div class="gallery-footer reveal">
         <div class="gallery-footer-line"></div>
